@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "convex": "convex dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint --max-warnings=0",
-    "check": "tsc",
+    "check": "convex codegen && tsc",
     "format": "prettier --write .",
     "prepare": "husky"
   },
