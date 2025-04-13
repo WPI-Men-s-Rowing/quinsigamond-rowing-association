@@ -27,7 +27,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "./convex",
+    "./convex/_generated/",
     ".next/types/**/*.ts",
     "eslint.config.mjs",
     "postcss.config.mjs",
