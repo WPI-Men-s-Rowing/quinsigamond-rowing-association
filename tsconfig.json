@@ -19,13 +19,15 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@convex/*": ["./convex/*"]
     }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "./convex",
     ".next/types/**/*.ts",
     "eslint.config.mjs",
     "postcss.config.mjs",
