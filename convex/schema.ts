@@ -1,6 +1,22 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
+const heatLaneAssignments = v.array(
+  v.object({
+    bowNumber: v.int64(),
+    sourcePosition: v.int64(),
+  }),
+);
+
+const progressionRulesBase = {
+  sourceHeatIds: v.array(v.id("heats")),
+  positions: v.array(v.int64()), // Finish positions we care about in the target heats
+};
+
+const progressionBase = {
+  name: v.string(), // E.g., Semifinal AB or Heat 1
+};
+
 export default defineSchema({
   teams: defineTable({
     name: v.string(),
@@ -55,36 +71,20 @@ export default defineSchema({
     progression: v.optional(
       v.union(
         v.object({
-          name: v.string(), // E.g., Semifinal AB or Heat 1
+          ...progressionBase,
           rules: v.array(
             v.object({
-              sourceHeatIds: v.array(v.id("heats")),
-              positions: v.array(v.int64()), // Finish positions we care about in the target heats
+              ...progressionRulesBase,
               // Local lane assignments, e.g., across all heats in this group only combined finish order by time
-              laneAssignments: v.array(
-                v.object({
-                  bowNumber: v.int64(),
-                  sourcePosition: v.int64(),
-                }),
-              ),
+              laneAssignments: heatLaneAssignments,
             }),
           ),
         }),
         v.object({
-          name: v.string(), // E.g., Semifinal AB or Heat 1
-          rules: v.array(
-            v.object({
-              sourceHeatIds: v.array(v.id("heats")),
-              positions: v.array(v.int64()), // Finish positions we care about in the target heats
-            }),
-          ),
+          ...progressionBase,
+          rules: v.array(v.object(progressionRulesBase)),
           // Global lane assignments, e.g., across all heats combined finish order by time
-          laneAssignments: v.array(
-            v.object({
-              bowNumber: v.int64(),
-              sourcePosition: v.int64(),
-            }),
-          ),
+          laneAssignments: heatLaneAssignments,
         }),
       ),
     ),
