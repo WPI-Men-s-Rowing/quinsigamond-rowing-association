@@ -10,7 +10,7 @@ jobs:
   Deploy-Preview:
     runs-on: ubuntu-latest
     environment:
-      name: Production
+      name: Preview
       url: ${{steps.vercel-deploy.outputs.VERCEL_URL}}
     steps:
       - uses: actions/checkout@v2
